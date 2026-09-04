@@ -1,0 +1,12 @@
+{
+  "name": "spotify-api",
+  "version": "1.0.0",
+  "description": "A music streaming api my very own spotify",
+  "license": "ISC",
+  "author": "QuasarDev",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
