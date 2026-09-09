@@ -4,7 +4,7 @@ const errorHandler = (err, req, res, next) => {
   let error = err;
 
   if (error instanceof ApiError) {
-    res.status(error.statusCode).json({
+    return res.status(error.statusCode).json({
       success: false,
       error: error.message
     });

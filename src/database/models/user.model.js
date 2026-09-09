@@ -4,7 +4,7 @@ import sequelize from "../../config/sequelize.js";
 const User = sequelize.define("User", {
   id: {
     type: DataTypes.UUID,
-    defaultvalue: DataTypes.UUIDV4,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
   },
@@ -29,7 +29,9 @@ const User = sequelize.define("User", {
   },
   createdAt: {
     type: DataTypes.DATE,
-    allowNull: false
+    defaultValue: DataTypes.NOW,
+    allowNull: false,
+    field: 'created_at'
   }
 },
 {
