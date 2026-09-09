@@ -4,7 +4,7 @@ import sequelize from "../../config/sequelize.js";
 const PlaylistSong = sequelize.define("PlaylistSong", {
   id: {
     type: DataTypes.UUID,
-    defaultvalue: DataTypes.UUIDV4,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
   },
