@@ -1,14 +1,22 @@
 import User from "../../database/models/user.model.js";
 import bcrypt from "bcrypt";
 import { ApiError } from "../../shared/utils/ApiError.js";
+import { Op } from "sequelize";
 
 const saltRound = 10;
 
 export const registerUser = async (userData) => {
   const { username, email, password } = userData;
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({
+    where: {
+      [Op.or]: [
+        { email },
+        { username }
+      ]
+    }
+  });
   if (user) {
-    throw new ApiError(409, "Email already registered");
+    throw new ApiError(409, "Email or username already registered");
   }
 
   const passwordHash = await bcrypt.hash(password, saltRound);
