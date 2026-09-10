@@ -2,11 +2,9 @@ import User from "../../database/models/user.model.js";
 import bcrypt from "bcrypt";
 import { ApiError } from "../../shared/utils/ApiError.js";
 import { Op } from "sequelize";
-import jwt from "jsonwebtoken";
+import { createToken } from "../../shared/utils/jwt.js";
 
 const saltRound = 10;
-const SECRET_KEY = process.env.JWT_SECRET;
-const EXPIRY = process.env.JWT_EXPIRES;
 
 export const registerUser = async (userData) => {
   const { username, email, password } = userData;
@@ -53,15 +51,4 @@ export const loginUser = async (userData) => {
   delete userJson.passwordHash;
   
   return { userJson, accessToken };
-}
-
-function createToken(user) {
-  return jwt.sign(
-    { id: user.id,
-      email: user.email,
-      role: user.role
-    },
-    SECRET_KEY,
-    { expiresIn: EXPIRY }
-  )
 }

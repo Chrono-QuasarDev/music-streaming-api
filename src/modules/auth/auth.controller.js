@@ -27,7 +27,7 @@ export const login = async (req, res, next) => {
       data: {
         user: userJson,
         accessToken,
-        expiresIn: '8h'
+        expiresIn: process.env.JWT_EXPIRES
       }
     });
   } catch (error) {
