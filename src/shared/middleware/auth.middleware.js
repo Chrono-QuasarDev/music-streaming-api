@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { ApiError } from "../utils/ApiError";
+import { ApiError } from "../utils/ApiError.js";
 
 export async function authenticate(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
