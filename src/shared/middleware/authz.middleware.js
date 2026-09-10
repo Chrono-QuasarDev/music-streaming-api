@@ -6,7 +6,7 @@ export const authorize = (roles) => {
       throw new ApiError(401, 'Unauthorized');
     }
 
-    if (!roles.includes(req.user.roles)) {
+    if (!roles.includes(req.user.role)) {
       throw new ApiError(403, 'Forbidden');
     }
 
