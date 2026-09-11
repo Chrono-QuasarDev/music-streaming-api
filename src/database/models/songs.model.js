@@ -13,8 +13,7 @@ const Song = sequelize.define("Song", {
   },
   artistId: {
     type: DataTypes.UUID,
-    allowNull: false,
-    field: 'artist_id'
+    allowNull: false
   },
   albumName: {
     type: DataTypes.STRING(255),
@@ -35,6 +34,10 @@ const Song = sequelize.define("Song", {
     type: DataTypes.STRING(2048),
     allowNull: false,
     field: 'file_path'
+  },
+  genre: {
+    type: DataTypes.STRING(),
+    allowNull: false
   },
   releaseDate: {
     type: DataTypes.DATE,

@@ -25,7 +25,7 @@ const PlaylistSong = sequelize.define("PlaylistSong", {
   }
 },
 {
-  tableName: 'playlist_songs',
+  tableName: 'playlists_songs',
   freezeTableName: true,
   timestamps: false
 });
