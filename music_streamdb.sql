@@ -25,6 +25,7 @@ CREATE TABLE songs (
   track_number integer NOT NULL,
   duration_ms integer NOT NULL,
   file_path varchar(2048) NOT NULL,
+  genre varchar NOT NULL,
   release_date date NOT NULL,
   created_at timestamp
 );

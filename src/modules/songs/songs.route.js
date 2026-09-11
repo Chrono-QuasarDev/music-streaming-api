@@ -6,8 +6,8 @@ import { songs, search, songInfo } from "./songs.controller.js";
 const router = Router();
 router.use(authenticate);
 
-router.get('/', authorize(['admin', 'artist', 'listener']), songs);
-router.get('/search', authorize(['admin', 'artist', 'listener']), search);
-router.get('/:id', authorize(['admin', 'artist', 'listener']), songInfo);
+router.get('/', songs);
+router.get('/search', search);
+router.get('/:id', songInfo);
 
 export default router;

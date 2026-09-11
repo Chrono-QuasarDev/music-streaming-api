@@ -5,6 +5,6 @@ import { profile } from "./user.controller.js";
 
 const router = Router();
 
-router.get('/me', authenticate, authorize(['listener', 'admin']), profile);
+router.get('/me', authenticate, profile);
 
 export default router;
