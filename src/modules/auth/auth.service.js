@@ -40,7 +40,7 @@ export const loginUser = async (userData) => {
     throw new ApiError(404, 'Invalid credentials');
   }
 
-  const isPassword = bcrypt.compare(password, user.passwordHash)
+  const isPassword = await bcrypt.compare(password, user.passwordHash)
   if(!isPassword) {
     throw new ApiError(401, 'Invalid credentials');
   }
