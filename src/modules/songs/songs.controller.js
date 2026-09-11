@@ -1,4 +1,4 @@
-import { getSongs, searchSongs } from "./songs.service.js";
+import { getSongs, searchSongs, getSongInfo } from "./songs.service.js";
 
 const ALLOWED_SORT_FIELDS = ['title', 'artist', 'album', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
@@ -58,6 +58,21 @@ export const search = async (req, res, next) => {
         totalItems: count,
         totalPages: Math.ceil(count / limit)
       }
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const songInfo = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const song = await getSongInfo(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Song fetched successfully',
+      data: song
     });
   } catch (error) {
     next(error);
