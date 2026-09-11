@@ -11,10 +11,9 @@ const Song = sequelize.define("Song", {
     type: DataTypes.STRING(255),
     allowNull: false
   },
-  artistId: {
+  artist_id: {
     type: DataTypes.UUID,
-    allowNull: false,
-    field: 'artist_id'
+    allowNull: false
   },
   albumName: {
     type: DataTypes.STRING(255),
