@@ -12,20 +12,25 @@ export const getSongs = async (query) => {
 }
 
 export const searchSongs = async (query) => {
-  const { limit, offset, q, sortBy, orderBy} = query;
+  const { title, album, genre, limit, offset, q, sortBy, orderBy} = query;
   const where = {};
 
   if (typeof q === 'string' && q.trim() !== '') {
     where[Op.or] = [
       { title: { [Op.iLike]: `%${q}%` } },
-      { albumName: { [Op.iLike]: `%${q}%` } }
+      { albumName: { [Op.iLike]: `%${q}%` } },
     ]
   }
+
+  if (title) where.title = { [Op.iLike]: `%${title}%` };
+  if (album) where.albumName = { [Op.iLike]: `%${album}%` };
+  if (genre) where.genre = { [Op.iLike]: `%${genre}%` };
 
   const songs = Song.findAndCountAll({
     where,
     limit,
-    offset
+    offset,
+    order: [[sortBy, orderBy]]
   });
   return songs;
 }
