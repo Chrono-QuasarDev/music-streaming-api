@@ -8,6 +8,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "seed:artists": "node src/database/seeders/seedArtists.js",
+    "seed:songs": "node src/database/seeders/seedSongs.js",
+    "seed": "npm run seed:artists && npm run seed:songs",
     "start": "node --watch server.js"
   },
   "dependencies": {
