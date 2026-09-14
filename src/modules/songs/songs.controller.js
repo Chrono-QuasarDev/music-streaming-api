@@ -1,10 +1,9 @@
-import { getSongs, searchSongs, getSongInfo } from "./songs.service.js";
-import fs from "fs";
+import { getSongs, searchSongs, getSongInfo, getSongFilePath } from "./songs.service.js";
+import { ApiError } from "../../shared/utils/ApiError.js";
+import fs from "fs/promises";
 import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { parseRange } from "../../shared/utils/parseRange.js";
+import { createReadStream } from "fs";
 
 const ALLOWED_SORT_FIELDS = ['title', 'album', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
@@ -87,26 +86,29 @@ export const songInfo = async (req, res, next) => {
 
 export const stream = async (req, res, next) => {
   try {
-    console.log('📢 Streaming request received! Range:', req.headers.range);
-
     // Find the song file in the server
-    const filePath = path.join(__dirname, '../../../spolist', '51_GANG4GANG_SpotiDost.mp3');
-    console.log('📁 Looking for file at:', filePath);
+    const filePath = await getSongFilePath(req.params.id);
 
     // Get the file info
-    const stats = fs.statSync(filePath);
+    const stats = await fs.stat(filePath);
     const fileSize = stats.size;
 
     // Check if the browser sent a range header
-    const range = req.headers.range;
+    const rangeHeader = req.headers.range;
+    const range = parseRange(rangeHeader, fileSize);
 
-    if (range) {
+    if (range.type === 'unsatisfiable') {
+      res.writeHead(416, {
+        'Content-Range': `bytes */${fileSize}`,
+        'Accept-Ranges': 'bytes'
+      });
+      return res.end();
+    }
+
+    if (range.type === 'partial') {
       // ----- BROWSER NEEDS A SPECIFIC PIECE
 
-      // Parse the range
-      const parts = range.replace('bytes=', '').split('-');
-      const start = parseInt(parts[0]);
-      const end = parts[1] ? parseInt(parts[1]) : fileSize - 1;
+      const { start, end } = range;
 
       // Calculate the size of the chunk
       const chunkSize = (end - start) + 1;
@@ -119,20 +121,29 @@ export const stream = async (req, res, next) => {
         'Content-Type': 'audio/mpeg'
       });
 
-      const stream = fs.createReadStream(filePath, { start, end });
-      stream.pipe(res);
-    } else {
-      // ----- BROWSER WANTS THE WHOLE FILE -----
-
-      res.writeHead(200, {
-        'Content-Length': fileSize,
-        'Content-Type': 'audio/mpeg'
+      const stream = createReadStream(filePath, { start, end });
+      stream.on('error', (err) => {
+        console.error('Error occurred while reading file:', err);
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end();
       });
-
-      // Stream the song
-      const stream = fs.createReadStream(filePath);
-      stream.pipe(res);
+      return stream.pipe(res);
     }
+
+    // ----- BROWSER WANTS THE WHOLE FILE -----
+    res.writeHead(200, {
+      'Content-Length': fileSize,
+      'Content-Type': 'audio/mpeg'
+    });
+
+    // Stream the song
+    const stream = createReadStream(filePath);
+    stream.on('error', (err) => {
+      console.error('Error occurred while reading file:', err);
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end();
+    });
+    return stream.pipe(res);
   } catch (error) {
     next(error);
   }

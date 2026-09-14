@@ -53,3 +53,12 @@ export const getSongInfo = async (id) => {
 
   return song;
 }
+
+export const getSongFilePath = async (id) => {
+  const song = await Song.findByPk(id);
+  if (!song) throw new ApiError(404, 'Song not found');
+
+  const filePath = song.filePath;
+
+  return filePath;
+}
