@@ -10,6 +10,13 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
+  if (error.code === 'ENOENT') {
+    return res.status(404).json({
+      success: false,
+      error: "Song file not found"
+    });
+  }
+
   console.error(error);
   return res.status(500).json({
     success: false,
