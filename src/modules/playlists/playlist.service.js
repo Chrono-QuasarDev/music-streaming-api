@@ -37,3 +37,12 @@ export const getPlaylistInfo = async (id) => {
 
   return playlist;
 }
+
+export const playlistUpdate = async (playlist, name) => {
+  const playlistName = await Playlist.findOne({ where: { name } });
+  if (playlistName) throw new ApiError(400, 'Playlist name already exists');
+
+  await playlist.update({ name });
+
+  return playlist;
+}
