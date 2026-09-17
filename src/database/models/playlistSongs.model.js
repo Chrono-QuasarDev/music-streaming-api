@@ -8,7 +8,7 @@ const PlaylistSong = sequelize.define("PlaylistSong", {
     primaryKey: true,
     allowNull: false,
   },
-  playlist_id: {
+  playlistId: {
     type: DataTypes.UUID,
     allowNull: false,
     field: 'playlist_id',
@@ -20,6 +20,7 @@ const PlaylistSong = sequelize.define("PlaylistSong", {
   },
   addedAt: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
     field: 'added_at',
   }
