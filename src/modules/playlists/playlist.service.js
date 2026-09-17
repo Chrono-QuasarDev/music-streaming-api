@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import Playlist from "../../database/models/playlist.model.js";
 import PlaylistSong from "../../database/models/playlistSongs.model.js";
 import Song from "../../database/models/songs.model.js";
@@ -43,6 +44,12 @@ export const playlistUpdate = async (playlist, name) => {
   if (playlistName) throw new ApiError(400, 'Playlist name already exists');
 
   await playlist.update({ name });
+
+  return playlist;
+}
+
+export const playlistDelete = async (playlistData) => {
+  const playlist = await Playlist.destroy({ where: { id: playlistData.id }});
 
   return playlist;
 }

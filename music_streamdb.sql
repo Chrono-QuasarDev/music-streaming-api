@@ -1,6 +1,6 @@
 CREATE TYPE user_role AS ENUM ('listener', 'artist', 'admin');
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id uuid PRIMARY KEY NOT NULL,
   username varchar(50) UNIQUE NOT NULL,
   email varchar(255) UNIQUE NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE users (
   created_at timestamp
 );
 
-CREATE TABLE artist_profiles (
+CREATE TABLE IF NOT EXISTS artist_profiles (
   id uuid PRIMARY KEY,
   user_id uuid UNIQUE NOT NULL,
   bio varchar(1000) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE artist_profiles (
   created_at timestamp
 );
 
-CREATE TABLE songs (
+CREATE TABLE IF NOT EXISTS songs (
   id uuid PRIMARY KEY NOT NULL,
   title varchar(255) NOT NULL,
   artist_id uuid NOT NULL,
@@ -30,14 +30,14 @@ CREATE TABLE songs (
   created_at timestamp
 );
 
-CREATE TABLE playlists (
+CREATE TABLE IF NOT EXISTS playlists (
   id uuid PRIMARY KEY NOT NULL,
   user_id uuid NOT NULL,
   name varchar(255) NOT NULL,
   created_at timestamp
 );
 
-CREATE TABLE playlists_songs (
+CREATE TABLE IF NOT EXISTS playlists_songs (
   id uuid PRIMARY KEY NOT NULL,
   playlist_id uuid NOT NULL,
   song_id uuid NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE playlists_songs (
   UNIQUE (playlist_id, song_id)
 );
 
-CREATE TABLE follows (
+CREATE TABLE IF NOT EXISTS follows (
   id uuid PRIMARY KEY NOT NULL,
   artist_id uuid NOT NULL,
   follower_id uuid NOT NULL,

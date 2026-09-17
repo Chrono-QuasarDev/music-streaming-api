@@ -33,6 +33,7 @@ export const authorizePlaylistOwner = async (req, res, next) => {
     }
 
     req.playlist = playlist;
+    console.log('authz done');
     next();
   } catch (error) {
     next(error);

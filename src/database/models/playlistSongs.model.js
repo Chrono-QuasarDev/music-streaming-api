@@ -12,11 +12,15 @@ const PlaylistSong = sequelize.define("PlaylistSong", {
     type: DataTypes.UUID,
     allowNull: false,
     field: 'playlist_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
   },
   songId: {
     type: DataTypes.UUID,
     allowNull: false,
     field: 'song_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
   },
   addedAt: {
     type: DataTypes.DATE,
