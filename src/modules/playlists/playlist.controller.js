@@ -1,4 +1,4 @@
-import { createPlaylist, getPlaylistInfo, getAllPlaylists, playlistUpdate, playlistDelete, addSong } from "./playlist.service.js";
+import { createPlaylist, getPlaylistInfo, getAllPlaylists, playlistUpdate, playlistDelete, addSong, removeSong } from "./playlist.service.js";
 import { createPlaylistSchema } from "./playlist.validator.js";
 
 export const playlist = async (req, res, next) => {
@@ -85,6 +85,22 @@ export const addSongToPlaylist = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: 'Song added to playlist successfully',
+      data: playlistSong
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const removeSongFromPlaylist = async (req, res, next) => {
+  try {
+    const { playlist } = req;
+    const { songId } = req.params;
+    const playlistSong = await removeSong(playlist.id, songId);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Song removed from playlist successfully',
       data: playlistSong
     });
   } catch (error) {

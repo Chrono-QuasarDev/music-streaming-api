@@ -69,3 +69,22 @@ export const addSong = async (playlistId, songId) => {
 
   return playlistSong;
 }
+
+export const removeSong = async (playlistId, songId) => {
+  const song = await PlaylistSong.findOne({
+    where: {
+      playlistId,
+      songId
+    }
+  });
+  if (!song) throw new ApiError(404, 'Song not found in the playlist');
+
+  const playlistSong = await PlaylistSong.destroy({
+    where: {
+      playlistId,
+      songId
+    }
+  });
+
+  return playlistSong;
+}
