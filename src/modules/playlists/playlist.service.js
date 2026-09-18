@@ -5,6 +5,9 @@ import Song from "../../database/models/songs.model.js";
 import { ApiError } from "../../shared/utils/ApiError.js";
 
 export const createPlaylist = async (id, name) => {
+  const isExits = await Playlist.findOne({ where: { id, name } });
+  if (isExits) throw new ApiError(400, 'Playlist name already exists');
+
   const playlist = await Playlist.create({
     userId: id,
     name
@@ -52,4 +55,17 @@ export const playlistDelete = async (playlistData) => {
   const playlist = await Playlist.destroy({ where: { id: playlistData.id }});
 
   return playlist;
+}
+
+export const addSong = async (playlistId, songId) => {
+  const [ playlistSong, created ] = await PlaylistSong.findOrCreate({
+    where: {
+      playlistId,
+      songId
+    }
+  });
+
+  if (!created) throw new ApiError(400, 'Song is already in the playlist');
+
+  return playlistSong;
 }

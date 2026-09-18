@@ -1,10 +1,10 @@
-import { createPlaylist, getPlaylistInfo, getAllPlaylists, playlistUpdate, playlistDelete } from "./playlist.service.js";
+import { createPlaylist, getPlaylistInfo, getAllPlaylists, playlistUpdate, playlistDelete, addSong } from "./playlist.service.js";
 import { createPlaylistSchema } from "./playlist.validator.js";
 
 export const playlist = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const name = createPlaylistSchema.parse(req.body);
+    const { name } = createPlaylistSchema.parse(req.body);
 
     const playlist = await createPlaylist(id, name);
 
@@ -72,6 +72,22 @@ export const deletePlaylist = async (req, res, next) => {
       data: playlist
     });
   } catch (error) {
-    
+    next(error);
+  }
+}
+
+export const addSongToPlaylist = async (req, res, next) => {
+  try {
+    const { playlist } = req;
+    const { songId } = req.body;
+    const playlistSong = await addSong(playlist.id, songId);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Song added to playlist successfully',
+      data: playlistSong
+    });
+  } catch (error) {
+    next(error);
   }
 }
