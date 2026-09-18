@@ -1,7 +1,15 @@
 import Router from "express";
-import { playlist, getPlaylist, allPlaylists, updatePlaylist, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist } from "./playlist.controller.js";
 import { authenticate } from "../../shared/middleware/auth.middleware.js";
 import { authorizePlaylistOwner } from "../../shared/middleware/authz.middleware.js";
+import { 
+  playlist, 
+  getPlaylist, 
+  allPlaylists, 
+  updatePlaylist, 
+  deletePlaylist, 
+  addSongToPlaylist, 
+  removeSongFromPlaylist 
+} from "./playlist.controller.js";
 
 const router = Router();
 router.use(authenticate);

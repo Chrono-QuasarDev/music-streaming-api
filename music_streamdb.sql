@@ -68,3 +68,5 @@ ALTER TABLE playlists_songs ADD FOREIGN KEY (song_id) REFERENCES songs (id) DEFE
 ALTER TABLE follows ADD FOREIGN KEY (artist_id) REFERENCES artist_profiles (id) DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE follows ADD FOREIGN KEY (follower_id) REFERENCES users (id) DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE playlists ADD CONSTRAINT playlists_user_id_name_unique UNIQUE (user_id, name);

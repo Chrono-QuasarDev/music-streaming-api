@@ -1,6 +1,20 @@
-import { createPlaylist, getPlaylistInfo, getAllPlaylists, playlistUpdate, playlistDelete, addSong, removeSong } from "./playlist.service.js";
-import { createPlaylistSchema } from "./playlist.validator.js";
+import {
+  createPlaylist, 
+  getPlaylistInfo, 
+  getAllPlaylists, 
+  playlistUpdate, 
+  playlistDelete, 
+  addSong, 
+  removeSong 
+} from "./playlist.service.js";
+import {
+  createPlaylistSchema, 
+  updatePlaylistSchema,
+  playlistIdSchema,
+  songIdSchema
+} from "./playlist.validator.js";
 
+// Create a new playlist
 export const playlist = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -18,6 +32,7 @@ export const playlist = async (req, res, next) => {
   }
 }
 
+// Get all playlists for the current user
 export const allPlaylists = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -33,10 +48,11 @@ export const allPlaylists = async (req, res, next) => {
   }
 }
 
+// Get information about a specific playlist
 export const getPlaylist = async (req, res, next) => {
   try {
-    const playlistId = req.params.id;
-    const playlist = await getPlaylistInfo(playlistId);
+    const { id } = playlistIdSchema.parse(req.params);
+    const playlist = await getPlaylistInfo(id);
 
     return res.status(200).json({
       success: true,
@@ -48,9 +64,11 @@ export const getPlaylist = async (req, res, next) => {
   }
 }
 
+// Update a playlist
 export const updatePlaylist = async (req, res,next) => {
   try {
-    const playlist = await playlistUpdate(req.playlist, req.body.name);
+    const { name } = updatePlaylistSchema.parse(req.body);
+    const playlist = await playlistUpdate(req.playlist, name);
 
     return res.status(200).json({
       success: true,
@@ -62,6 +80,7 @@ export const updatePlaylist = async (req, res,next) => {
   }
 }
 
+// Delete a playlist
 export const deletePlaylist = async (req, res, next) => {
   try {
     const playlist = await playlistDelete(req.playlist);
@@ -76,15 +95,16 @@ export const deletePlaylist = async (req, res, next) => {
   }
 }
 
+// Add a song to a playlist
 export const addSongToPlaylist = async (req, res, next) => {
   try {
     const { playlist } = req;
-    const { songId } = req.body;
+    const { songId } = songIdSchema.parse(req.body);
     const playlistSong = await addSong(playlist.id, songId);
 
     return res.status(200).json({
       success: true,
-      message: 'Song added to playlist successfully',
+      message: 'Playlist song added successfully',
       data: playlistSong
     });
   } catch (error) {
@@ -92,16 +112,17 @@ export const addSongToPlaylist = async (req, res, next) => {
   }
 }
 
+// Remove a song from a playlist
 export const removeSongFromPlaylist = async (req, res, next) => {
   try {
     const { playlist } = req;
-    const { songId } = req.params;
-    const playlistSong = await removeSong(playlist.id, songId);
+    const { songId } = songIdSchema.parse(req.params);
+    const song = await removeSong(playlist, songId);
 
     return res.status(200).json({
       success: true,
-      message: 'Song removed from playlist successfully',
-      data: playlistSong
+      message: 'Playlist song removed successfully',
+      data: song
     });
   } catch (error) {
     next(error);
