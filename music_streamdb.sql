@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   email varchar(255) UNIQUE NOT NULL,
   password_hash varchar(255) NOT NULL,
   role user_role DEFAULT 'listener',
-  created_at timestamp
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS artist_profiles (
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS artist_profiles (
   user_id uuid UNIQUE NOT NULL,
   bio varchar(1000) NOT NULL,
   profile_picture_url varchar(2048) NOT NULL,
-  created_at timestamp
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS songs (
@@ -27,21 +27,21 @@ CREATE TABLE IF NOT EXISTS songs (
   file_path varchar(2048) NOT NULL,
   genre varchar NOT NULL,
   release_date date NOT NULL,
-  created_at timestamp
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS playlists (
   id uuid PRIMARY KEY NOT NULL,
   user_id uuid NOT NULL,
   name varchar(255) NOT NULL,
-  created_at timestamp
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS playlists_songs (
   id uuid PRIMARY KEY NOT NULL,
   playlist_id uuid NOT NULL,
   song_id uuid NOT NULL,
-  added_at timestamp,
+  added_at timestamp DEFAULT CURRENT_TIMESTAMP,
 
   UNIQUE (playlist_id, song_id)
 );
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS follows (
   id uuid PRIMARY KEY NOT NULL,
   artist_id uuid NOT NULL,
   follower_id uuid NOT NULL,
-  followed_at timestamp,
+  followed_at timestamp DEFAULT CURRENT_TIMESTAMP,
 
   UNIQUE (artist_id, follower_id)
 );
