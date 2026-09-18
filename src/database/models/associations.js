@@ -5,35 +5,37 @@ import PlaylistSong from "./playlistSongs.model.js";
 import Playlist from "./playlist.model.js";
 import Follows from "./follows.model.js";
 
-User.hasOne(ArtistProfile, { foreignKey: "user_id" });
-ArtistProfile.belongsTo(User, { foreignKey: "user_id" });
+User.hasOne(ArtistProfile, { foreignKey: "userId" });
+ArtistProfile.belongsTo(User, { foreignKey: "userId" });
 
-ArtistProfile.hasMany(Song, { foreignKey: "artist_id" });
-Song.belongsTo(ArtistProfile, { foreignKey: "artist_id" });
+ArtistProfile.hasMany(Song, { foreignKey: "artistId" });
+Song.belongsTo(ArtistProfile, { foreignKey: "artistId" });
 
-User.hasMany(Playlist, { foreignKey: "user_id" });
-Playlist.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Playlist, { foreignKey: "userId" });
+Playlist.belongsTo(User, { foreignKey: "userId" });
 
 Playlist.belongsToMany(Song, {
+  as: 'songs',
   through: PlaylistSong,
-  foreignKey: "playlist_id",
-  otherKey: "song_id"
+  foreignKey: "playlistId",
+  otherKey: "songId"
 });
 Song.belongsToMany(Playlist, {
+  as: 'playlists',
   through: PlaylistSong,
-  foreignKey: "song_id",
-  otherKey: "playlist_id"
+  foreignKey: "songId",
+  otherKey: "playlistId"
 });
 
 User.belongsToMany(User, {
   as: 'Artist',
   through: Follows,
-  foreignKey: "artist_id",
-  otherKey: "follower_id"
+  foreignKey: "artistId",
+  otherKey: "followerId"
 });
 User.belongsToMany(User, {
   as: 'Follower',
   through: Follows,
-  foreignKey: "follower_id",
-  otherKey: "artist_id"
+  foreignKey: "followerId",
+  otherKey: "artistId"
 });
