@@ -27,15 +27,15 @@ Song.belongsToMany(Playlist, {
   otherKey: "playlistId"
 });
 
-User.belongsToMany(User, {
-  as: 'Artist',
-  through: Follows,
-  foreignKey: "artistId",
-  otherKey: "followerId"
-});
-User.belongsToMany(User, {
-  as: 'Follower',
+User.belongsToMany(ArtistProfile, {
+  as: 'FollowedArtists',
   through: Follows,
   foreignKey: "followerId",
   otherKey: "artistId"
+});
+ArtistProfile.belongsToMany(User, {
+  as: 'Follower',
+  through: Follows,
+  foreignKey: "artistId",
+  otherKey: "followerId"
 });

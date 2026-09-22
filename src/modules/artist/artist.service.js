@@ -16,7 +16,7 @@ export const getArtist = async (id) => {
         attributes: { exclude: ['id', 'artistId', 'filePath','createdAt'] }
       }
     ],
-    attributes: ['bio']
+    attributes: { exclude: ['userId', 'createdAt'] }
   });
   if (!artist) throw new ApiError(404, "Artist not found");
 
@@ -29,17 +29,21 @@ export const followArtist = async (artistId, userId) => {
 
   if (isArtist.userId === userId) throw new ApiError(400, "You cannot follow yourself");
 
-  const isExist = await Follows.findOne({
-    where: {
-      artistId,
-      followerId: userId
-    }
-  });
-  if (isExist) throw new ApiError(400, "You are already following this artist");
+  let follows;
+  let created;
 
-  await Follows.create({
-    followerId: userId,
-    artistId
-  });
-  return;
+  try {
+    [follows, created] = await Follows.findOrCreate({
+      where: {
+        artistId,
+        followerId: userId
+      }
+    });
+  } catch (error) {
+    throw new ApiError(500, "Error following artist");
+  }
+
+  if (!created) throw new ApiError(400, "You are already following this artist");
+
+  return follows;
 }
