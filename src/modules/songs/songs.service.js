@@ -9,7 +9,8 @@ export const getSongs = async (query) => {
   const songs = Song.findAndCountAll({
     limit,
     offset,
-    order: [[sortBy, orderBy]]
+    order: [[sortBy, orderBy]],
+    attributes: ['id', 'title', 'artistId', 'albumName', 'genre']
   });
   return songs;
 }
