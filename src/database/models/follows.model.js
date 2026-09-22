@@ -8,18 +8,19 @@ const Follows = sequelize.define("Follows", {
     primaryKey: true,
     allowNull: false
   },
-  artist_id: {
+  artistId: {
     type: DataTypes.UUID,
     allowNull: false,
     field: 'artist_id'
   },
-  follower_id: {
+  followerId: {
     type: DataTypes.UUID,
     allowNull: false,
     field: 'follower_id'
   },
   followedAt: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
     field: 'followed_at'
   }
