@@ -1,7 +1,5 @@
 import { getSongs, searchSongs, getSongInfo, getSongFilePath } from "./songs.service.js";
-import { ApiError } from "../../shared/utils/ApiError.js";
 import fs from "fs/promises";
-import path from "path";
 import { parseRange } from "../../shared/utils/parseRange.js";
 import { createReadStream } from "fs";
 
