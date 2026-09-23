@@ -63,3 +63,17 @@ export const getSongFilePath = async (id) => {
 
   return filePath;
 }
+
+export const shareSong = async (id) => {
+  const song = await Song.findByPk(id, {
+    attributes: ['id', 'title', 'albumName'],
+    include: [{
+      model: ArtistProfile,
+      attributes: { exclude: ['userId', 'profilePictureUrl', 'createdAt', 'updatedAt'] },
+      include: [{ model: User, attributes: ['username'] }]
+    }]
+  });
+  if (!song) throw new ApiError(404, 'Song not found');
+
+  return song;
+}
