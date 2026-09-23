@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import { parseRange } from "../../shared/utils/parseRange.js";
 import { createReadStream } from "fs";
 
-const ALLOWED_SORT_FIELDS = ['title', 'album', 'genre', 'releaseDate'];
+const ALLOWED_SORT_FIELDS = ['title', 'albumName', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
 
 export const songs = async (req, res, next) => {
