@@ -37,7 +37,7 @@ export const loginUser = async (userData) => {
   const { email, password } = userData;
   const user = await User.findOne({ where: { email } });
   if (!user) {
-    throw new ApiError(404, 'Invalid credentials');
+    throw new ApiError(401, 'Invalid credentials');
   }
 
   const isPassword = await bcrypt.compare(password, user.passwordHash)

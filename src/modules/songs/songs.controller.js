@@ -1,4 +1,4 @@
-import { getSongs, searchSongs, getSongInfo, getSongFilePath } from "./songs.service.js";
+import { getSongs, searchSongs, getSongInfo, getSongFilePath, shareSong } from "./songs.service.js";
 import fs from "fs/promises";
 import { parseRange } from "../../shared/utils/parseRange.js";
 import { createReadStream } from "fs";
@@ -142,6 +142,21 @@ export const stream = async (req, res, next) => {
       res.end();
     });
     return stream.pipe(res);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const share = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const song = await shareSong(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Song shared successfully',
+      data: song
+    });
   } catch (error) {
     next(error);
   }
