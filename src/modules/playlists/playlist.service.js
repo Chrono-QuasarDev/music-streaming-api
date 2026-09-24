@@ -2,6 +2,8 @@ import { Op } from "sequelize";
 import Playlist from "../../database/models/playlist.model.js";
 import PlaylistSong from "../../database/models/playlistSongs.model.js";
 import Song from "../../database/models/songs.model.js";
+import User from "../../database/models/user.model.js";
+import ArtistProfile from "../../database/models/artistProfile.model.js";
 import { ApiError } from "../../shared/utils/ApiError.js";
 
 // Create a new playlist
@@ -35,6 +37,13 @@ export const getPlaylistInfo = async (id) => {
         model: Song, as: 'songs',
         attributes: ['id', 'title', 'artistId', 'durationMs', 'genre', 'releaseDate'],
         through: { attributes: [], },
+        include: [
+          { 
+            model: ArtistProfile,
+            attributes: ['id', 'bio', 'profilePictureUrl'],
+            include: [{ model: User, attributes: ['username'] }]
+          }
+        ]
       }
     ],
     order: [[{ model: Song, as: 'songs' }, PlaylistSong, 'addedAt', 'ASC']]
