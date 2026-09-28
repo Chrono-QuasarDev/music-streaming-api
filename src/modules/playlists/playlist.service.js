@@ -41,7 +41,7 @@ export const getPlaylistInfo = async (id) => {
           { 
             model: ArtistProfile,
             attributes: ['id', 'bio', 'profilePictureUrl'],
-            include: [{ model: User, attributes: ['username'] }]
+            include: [{ model: User, attributes: ['id', 'username'] }]
           }
         ]
       }

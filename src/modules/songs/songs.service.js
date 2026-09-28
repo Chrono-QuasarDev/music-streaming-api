@@ -10,7 +10,12 @@ export const getSongs = async (query) => {
     limit,
     offset,
     order: [[sortBy, orderBy]],
-    attributes: ['id', 'title', 'artistId', 'albumName', 'genre']
+    attributes: ['id', 'title', 'artistId', 'albumName', 'genre'],
+    include: [{
+      model: ArtistProfile,
+      attributes: ['id', 'bio', 'profilePictureUrl'],
+      include: [{ model: User, attributes: ['id', 'username'] }]
+    }]
   });
   return songs;
 }
@@ -34,7 +39,12 @@ export const searchSongs = async (query) => {
     where,
     limit,
     offset,
-    order: [[sortBy, orderBy]]
+    order: [[sortBy, orderBy]],
+    include: [{
+      model: ArtistProfile,
+      attributes: ['id', 'bio', 'profilePictureUrl'],
+      include: [{ model: User, attributes: ['id', 'username'] }]
+    }]
   });
   return songs;
 }
