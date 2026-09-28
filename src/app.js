@@ -7,15 +7,15 @@ import v1Routes from "./modules/v1.routes.js";
 
 const app = express();
 
-app.use('/health', healthRouter);
-
 app.use(express.json());
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 app.use(cors());
 
+app.use('/health', healthRouter);
 app.use('/api/v1', v1Routes);
+
 app.use(errorHandler);
 
 export default app;

@@ -9,14 +9,14 @@ export const getArtist = async (id) => {
     include: [
       {
         model: User,
-        attributes: ['username']
+        attributes: ['id', 'username']
       },
       { 
         model: Songs,
-        attributes: { exclude: ['id', 'artistId', 'filePath','createdAt'] }
+        attributes: { exclude: ['filePath','createdAt'] }
       }
     ],
-    attributes: { exclude: ['userId', 'createdAt'] }
+    attributes: { exclude: ['createdAt'] }
   });
   if (!artist) throw new ApiError(404, "Artist not found");
 

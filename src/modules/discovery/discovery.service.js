@@ -1,4 +1,6 @@
 import Song from "../../database/models/songs.model.js";
+import User from "../../database/models/user.model.js";
+import ArtistProfile from "../../database/models/artistProfile.model.js";
 import { Op } from "sequelize";
 
 
@@ -15,7 +17,12 @@ export const getNewReleases = async (query) => {
     limit,
     offset,
     order: [[sortBy, orderBy]],
-    attributes: { exclude: ['filePath', 'trackNumber', 'createdAt'] }
+    attributes: { exclude: ['filePath', 'trackNumber', 'createdAt'] },
+    include: [{
+      model: ArtistProfile,
+      attributes: ['id', 'bio', 'profilePictureUrl'],
+      include: [{ model: User, attributes: ['id', 'username'] }]
+    }]
   });
 
   return releases;
