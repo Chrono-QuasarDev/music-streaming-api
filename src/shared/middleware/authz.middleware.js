@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import Playlist from "../../database/models/playlist.model.js";
 
-export const authorize = async (roles) => {
+export const authorize = (roles) => {
   return (req, res, next) => {
     try {
       if (!req.user) {
