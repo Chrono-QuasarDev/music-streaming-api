@@ -1,8 +1,11 @@
 import { Op } from "sequelize";
+import fs from "fs/promises";
 import Song from "../../database/models/songs.model.js";
 import User from "../../database/models/user.model.js";
 import ArtistProfile from "../../database/models/artistProfile.model.js";
 import { ApiError } from "../../shared/utils/ApiError.js";
+import { buildPermanentSongPath, fileCleaner, validateAudioFile } from "../../shared/utils/music.utils.js";
+
 
 export const getSongs = async (query) => {
   const { limit, offset, sortBy, orderBy } = query;
@@ -86,4 +89,50 @@ export const shareSong = async (id) => {
   if (!song) throw new ApiError(404, 'Song not found');
 
   return song;
+}
+
+export const createSong = async (id, songData, stagingPath) => {
+  const artistProfile = await ArtistProfile.findOne({ where: { userId: id } });
+
+  if (!artistProfile) {
+    await fileCleaner(stagingPath);
+    throw new ApiError(404, 'Artist profile not found');
+  } 
+
+  let duration;
+  try {
+    duration = await validateAudioFile(stagingPath);
+  } catch (error) {
+    await fileCleaner(stagingPath);
+    throw new ApiError(422, `Invalid audio file: ${error.message}`);
+  }
+
+  const permanentPath = buildPermanentSongPath(stagingPath);
+  
+  try {
+    await fs.rename(stagingPath, permanentPath);
+
+    const song = await Song.create({
+      artistId: artistProfile.id,
+      title: songData.title,
+      albumName: songData.albumName,
+      genre: songData.genre,
+      trackNumber: songData.trackNumber,
+      releaseDate: songData.releaseDate || new Date(),
+      durationMs: duration,
+      filePath: permanentPath
+    });
+
+    song.filePath = undefined;
+    return song;
+  } catch (error) {
+    await fileCleaner(permanentPath);
+    
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
+    console.error('Error occurred while creating song:', error);
+    throw new ApiError(500, 'Failed to create song');
+  }
 }
