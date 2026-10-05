@@ -3,7 +3,7 @@ import sequelize from "./src/config/sequelize.js";
 import "./src/database/models/associations.js";
 import app from "./src/app.js";
 
-if (!process.env.DB_NAME || !process.env.DB_USERNAME || !process.env.DB_PASSWORD || !process.env.DB_HOST || !process.env.DB_PORT || !process.env.PORT) {
+if (!process.env.DATABASE_URL || !process.env.PORT) {
   console.error("One or more required environment variables are not set");
   process.exit(1);
 }
