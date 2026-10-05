@@ -46,6 +46,7 @@ const Song = sequelize.define("Song", {
   },
   createdAt: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
     field: 'created_at'
   }

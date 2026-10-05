@@ -1,7 +1,14 @@
-import { getSongs, searchSongs, getSongInfo, getSongFilePath, shareSong } from "./songs.service.js";
+import { 
+  getSongs, searchSongs, 
+  getSongInfo, getSongFilePath, 
+  shareSong, createSong
+} from "./songs.service.js";
 import fs from "fs/promises";
 import { parseRange } from "../../shared/utils/parseRange.js";
 import { createReadStream } from "fs";
+import { songSchema } from "./songs.validator.js";
+import { parse } from "path";
+import { fileCleaner } from "../../shared/utils/music.utils.js";
 
 const ALLOWED_SORT_FIELDS = ['title', 'albumName', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
@@ -156,6 +163,43 @@ export const share = async (req, res, next) => {
       success: true,
       message: 'Song shared successfully',
       data: song
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const addSong = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: 'No audio file provided'
+      });
+    }
+    const { title, albumName, genre, trackNumber, releaseDate } = req.body;
+    const { id } = req.user;
+    const { path } = req.file;
+
+    const songData = songSchema.parse({
+      title,
+      albumName,
+      genre,
+      trackNumber,
+      releaseDate
+    });
+    const song = await createSong(id, songData, path);
+
+    res.status(201).json({
+      success: true,
+      message: 'Song added successfully',
+      data: {
+        song,
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+      },
     });
   } catch (error) {
     next(error);

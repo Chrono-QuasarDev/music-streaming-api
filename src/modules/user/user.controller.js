@@ -1,4 +1,6 @@
 import { getProfile, getPublicProfile } from "./user.service.js";
+import { updateUserProfile } from "./user.service.js";
+import { updateProfileSchema } from "./user.validator.js";
 
 export async function profile(req, res, next) {
   try {
@@ -24,6 +26,22 @@ export async function publicProfile(req, res, next) {
       success: true,
       message: 'User profile',
       data: user
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function updateProfile(req, res, next) {
+  try {
+    const { id } = req.user;
+    const userData = updateProfileSchema.parse(req.body);
+    const updatedUser = await updateUserProfile(id, userData);
+
+    return res.status(200).json({
+      success: true,
+      message: 'User profile updated',
+      data: updatedUser
     });
   } catch (error) {
     next(error);
