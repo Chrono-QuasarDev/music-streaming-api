@@ -7,8 +7,6 @@ import fs from "fs/promises";
 import { parseRange } from "../../shared/utils/parseRange.js";
 import { createReadStream } from "fs";
 import { songSchema } from "./songs.validator.js";
-import { parse } from "path";
-import { fileCleaner } from "../../shared/utils/music.utils.js";
 
 const ALLOWED_SORT_FIELDS = ['title', 'albumName', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
@@ -177,9 +175,10 @@ export const addSong = async (req, res, next) => {
         error: 'No audio file provided'
       });
     }
+
     const { title, albumName, genre, trackNumber, releaseDate } = req.body;
     const { id } = req.user;
-    const { path } = req.file;
+    const file = req.file;
 
     const songData = songSchema.parse({
       title,
@@ -188,18 +187,13 @@ export const addSong = async (req, res, next) => {
       trackNumber,
       releaseDate
     });
-    const song = await createSong(id, songData, path);
+
+    const song = await createSong(id, songData, file);
 
     res.status(201).json({
       success: true,
       message: 'Song added successfully',
-      data: {
-        song,
-        filename: req.file.filename,
-        originalName: req.file.originalname,
-        mimeType: req.file.mimetype,
-        size: req.file.size,
-      },
+      data: song,
     });
   } catch (error) {
     next(error);

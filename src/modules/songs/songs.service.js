@@ -1,10 +1,10 @@
 import { Op } from "sequelize";
-import fs from "fs/promises";
 import Song from "../../database/models/songs.model.js";
 import User from "../../database/models/user.model.js";
 import ArtistProfile from "../../database/models/artistProfile.model.js";
 import { ApiError } from "../../shared/utils/ApiError.js";
-import { buildPermanentSongPath, fileCleaner, validateAudioFile } from "../../shared/utils/music.utils.js";
+import { validateAudioFile } from "../../shared/utils/music.utils.js";
+import { deleteFileFromB2, uploadFileToB2 } from "../../shared/middleware/aws.upload.js";
 
 
 export const getSongs = async (query) => {
@@ -91,48 +91,29 @@ export const shareSong = async (id) => {
   return song;
 }
 
-export const createSong = async (id, songData, stagingPath) => {
+export const createSong = async (id, songData, file) => {
   const artistProfile = await ArtistProfile.findOne({ where: { userId: id } });
-
   if (!artistProfile) {
-    await fileCleaner(stagingPath);
     throw new ApiError(404, 'Artist profile not found');
   } 
 
-  let duration;
-  try {
-    duration = await validateAudioFile(stagingPath);
-  } catch (error) {
-    await fileCleaner(stagingPath);
-    throw new ApiError(422, `Invalid audio file: ${error.message}`);
-  }
+  const duration = await validateAudioFile(file);
+  // TODO: Add a unique constraint on (artistId, title)
 
-  const permanentPath = buildPermanentSongPath(stagingPath);
-  
+  const fileKey = await uploadFileToB2(file);
   try {
-    await fs.rename(stagingPath, permanentPath);
-
     const song = await Song.create({
       artistId: artistProfile.id,
-      title: songData.title,
-      albumName: songData.albumName,
-      genre: songData.genre,
-      trackNumber: songData.trackNumber,
-      releaseDate: songData.releaseDate || new Date(),
+      ...songData,
       durationMs: duration,
-      filePath: permanentPath
+      filePath: fileKey
     });
-
-    song.filePath = undefined;
-    return song;
-  } catch (error) {
-    await fileCleaner(permanentPath);
     
-    if (error instanceof ApiError) {
-      throw error;
-    }
+    const { filePath, ...safeSong } = song.toJSON();
+    return safeSong;
+  } catch (error) {
+    await deleteFileFromB2(fileKey).catch((err) => console.error('B2 cleanup failed', err));
 
-    console.error('Error occurred while creating song:', error);
     throw new ApiError(500, 'Failed to create song');
   }
 }

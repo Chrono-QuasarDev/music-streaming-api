@@ -1,55 +1,30 @@
-import fs from "fs/promises";
-import { parseFile } from "music-metadata";
-import path from "path";
-import { fileURLToPath } from "url";
-import crypto from "crypto";
+import { parseBuffer } from "music-metadata";
+import { ApiError } from "./ApiError.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const SUPPORTED = [
+  { container: /^MPEG$/,       codec: /LAYER 3/ },
+  { container: /^WAVE?$/,      codec: /^(PCM|ADPCM)/ },
+  { container: /^FLAC$/,       codec: /^FLAC/ },
+  { container: /^(ADTS|AAC)/,  codec: /AAC/ },
+  { container: /^(M4A|MP4)/,   codec: /AAC/ },
+  { container: /^OGG$/,        codec: /^(VORBIS|OPUS|FLAC)/ },
+];
 
-const PERMANENT_DIR = path.join(__dirname, "../../..", "spolist");
-fs.mkdir(PERMANENT_DIR, { recursive: true }).catch((err) => {
-  console.error('Failed to create permanent directory:', err);
-});
-
-export async function fileCleaner(path) {
+export async function validateAudioFile(file) {
+  let format;
   try {
-    await fs.unlink(path)
-  } catch (error) {
-    console.error('Failed to clean up song file:', error);
+    ({ format } = await parseBuffer(file.buffer, { mimeType: file.mimetype}, { duration: true }));
+  } catch (err) {
+    console.error('music-metadata failed:', err);
+    throw new ApiError(400, 'Could not read audio file');
   }
-}
+  
+  const container = String(format.container ?? '').toUpperCase();
+  const codec = String(format.codec ?? '').toUpperCase();
 
-export async function validateAudioFile(path) {
-  const meta = await parseFile(path, { duration: true });
-  const { container, codec, duration } = meta.format;
+  const ok = SUPPORTED.some((f) => f.container.test(container) && f.codec.test(codec));
+  if (!ok) throw new ApiError(415, `Unsupported audio format: ${container}/${codec}`);
 
-  const normalizedContainer = String(container || '').toUpperCase();
-  const normalizedCodec = String(codec || '').toUpperCase();
-  const key = `${container}/${codec}`;
-
-  const supportedFormats = {
-    'MPEG': ['MPEG 1 LAYER 3', 'MPEG 2 LAYER 3', 'MPEG 2.5 LAYER 3'],
-    'WAV': ['PCM', 'ADPCM'],
-    'FLAC': ['FLAC'],
-    'AAC': ['AAC', 'AAC LC', 'HE-AAC', 'HE-AAC V2'],
-    'OGG': ['VORBIS', 'OPUS']
-  };
-
-  const normalizedContainerKey = normalizedContainer === 'WAVE' ? 'WAV' : normalizedContainer;
-  const acceptedCodecs = supportedFormats[normalizedContainerKey] || [];
-  const isSupported = acceptedCodecs.some((supportedCodec) => supportedCodec === normalizedCodec);
-
-  if (!isSupported) {
-    throw new Error(`Unsupported audio format: ${key}`);
-  }
-
-  return Math.round(duration * 1000);
-}
-
-export function buildPermanentSongPath(stagingPath) {
-  const extension = path.extname(stagingPath);
-  const permanentName = `${crypto.randomUUID()}${extension}`;
-  const permanentPath = path.join(PERMANENT_DIR, permanentName);
-  return permanentPath;
+  if (!format.duration) throw new ApiError(400, 'Could not determine audio duration');
+  return Math.round(format.duration * 1000);
 }
