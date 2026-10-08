@@ -3,7 +3,7 @@ import { Upload } from "@aws-sdk/lib-storage";
 import crypto from "crypto";
 import path from "path";
 
-const s3 = new S3Client({ 
+export const s3 = new S3Client({ 
   endpoint: process.env.B2_ENDPOINT,
   region: 'us-east-005',
   credentials: {
@@ -15,10 +15,10 @@ const s3 = new S3Client({
   requestchecksumValidation: 'WHEN_REQUIRED',
 });
 
-export const uploadFileToB2 = async (file) => {
+export const uploadFileToB2 = async (file, id) => {
   const fileExtension = path.extname(file.originalname);
   const uniqueFilename = `${crypto.randomUUID()}-${new Date().toISOString().split('T')[0]}${fileExtension}`;
-  const key = `songs/${uniqueFilename}`;
+  const key = `songs/${id}/${uniqueFilename}`;
 
   const parallelUpload = new Upload({
     client: s3,

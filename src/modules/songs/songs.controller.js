@@ -1,3 +1,6 @@
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { pipeline } from "stream/promises";
+import { s3 } from "../../shared/middleware/aws.upload.js";
 import { 
   getSongs, searchSongs, 
   getSongInfo, getSongFilePath, 
@@ -90,64 +93,28 @@ export const songInfo = async (req, res, next) => {
 export const stream = async (req, res, next) => {
   try {
     // Find the song file in the server
-    const filePath = await getSongFilePath(req.params.id);
+    const key = await getSongFilePath(req.params.id);
 
-    // Get the file info
-    const stats = await fs.stat(filePath);
-    const fileSize = stats.size;
+    const data = await s3.send(new GetObjectCommand({
+      Bucket: process.env.B2_BUCKET_NAME,
+      Key: key,
+      Range: req.headers.range,
+    }));
 
-    // Check if the browser sent a range header
-    const rangeHeader = req.headers.range;
-    const range = parseRange(rangeHeader, fileSize);
-
-    if (range.type === 'unsatisfiable') {
-      res.writeHead(416, {
-        'Content-Range': `bytes */${fileSize}`,
-        'Accept-Ranges': 'bytes'
-      });
-      return res.end();
-    }
-
-    if (range.type === 'partial') {
-      // ----- BROWSER NEEDS A SPECIFIC PIECE
-
-      const { start, end } = range;
-
-      // Calculate the size of the chunk
-      const chunkSize = (end - start) + 1;
-
-      // Add everything to the response
-      res.writeHead(206, {
-        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': chunkSize,
-        'Content-Type': 'audio/mpeg'
-      });
-
-      const stream = createReadStream(filePath, { start, end });
-      stream.on('error', (err) => {
-        console.error('Error occurred while reading file:', err);
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end();
-      });
-      return stream.pipe(res);
-    }
-
-    // ----- BROWSER WANTS THE WHOLE FILE -----
-    res.writeHead(200, {
-      'Content-Length': fileSize,
-      'Content-Type': 'audio/mpeg'
+    res.status(data.ContentRange ? 206 : 200);
+    res.set({
+      'Content-Type': data.ContentType || 'audio/mpeg',
+      'Content-Length': data.ContentLength,
+      'Accept-Ranges': 'bytes',
+      ...(data.ContentRange && { 'Content-Range': data.ContentRange }),
     });
 
-    // Stream the song
-    const stream = createReadStream(filePath);
-    stream.on('error', (err) => {
-      console.error('Error occurred while reading file:', err);
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end();
-    });
-    return stream.pipe(res);
+    await pipeline(data.Body, res);
   } catch (error) {
+    if (error?.$metadata?.httpStatusCode === 416) {
+      return res.status(416).set('Content-Range', 'bytes */*').end();
+    }
+    if (res.headersSent) return res.destroy();
     next(error);
   }
 }

@@ -100,7 +100,7 @@ export const createSong = async (id, songData, file) => {
   const duration = await validateAudioFile(file);
   // TODO: Add a unique constraint on (artistId, title)
 
-  const fileKey = await uploadFileToB2(file);
+  const fileKey = await uploadFileToB2(file, artistProfile.id);
   try {
     const song = await Song.create({
       artistId: artistProfile.id,
@@ -113,6 +113,10 @@ export const createSong = async (id, songData, file) => {
     return safeSong;
   } catch (error) {
     await deleteFileFromB2(fileKey).catch((err) => console.error('B2 cleanup failed', err));
+
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      throw new ApiError(409, 'A song with this title already exists for this artist');
+    }
 
     throw new ApiError(500, 'Failed to create song');
   }
