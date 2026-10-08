@@ -1,0 +1,602 @@
+[
+  {
+    "name": "The Weeknd",
+    "username": "theweeknd",
+    "email": "theweeknd@catalog.local",
+    "bio": "Abel Makkonen Tesfaye, known professionally as The Weeknd, is a Canadian singer-songwriter and record producer known for his sonic versatility and dark lyricism.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "After Hours",
+        "tracks": [
+          {
+            "title": "Blinding Lights",
+            "track_number": 9,
+            "duration_ms": 200000,
+            "genre": "Synthwave",
+            "release_date": "2020-03-20",
+            "local_filename": "the_weeknd/blinding_lights.mp3"
+          },
+          {
+            "title": "Save Your Tears",
+            "track_number": 11,
+            "duration_ms": 215000,
+            "genre": "Synthwave",
+            "release_date": "2020-03-20",
+            "local_filename": "the_weeknd/save_your_tears.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Drake",
+    "username": "champagnepapi",
+    "email": "drake@catalog.local",
+    "bio": "Aubrey Drake Graham is a Canadian rapper, singer, and songwriter. An influential figure in contemporary popular music, he is credited with popularizing singing and hip-hop R&B components.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "Scorpion",
+        "tracks": [
+          {
+            "title": "God's Plan",
+            "track_number": 5,
+            "duration_ms": 198000,
+            "genre": "Hip Hop",
+            "release_date": "2018-06-29",
+            "local_filename": "drake/gods_plan.mp3"
+          },
+          {
+            "title": "In My Feelings",
+            "track_number": 21,
+            "duration_ms": 217000,
+            "genre": "Hip Hop",
+            "release_date": "2018-06-29",
+            "local_filename": "drake/in_my_feelings.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Billie Eilish",
+    "username": "billieeilish",
+    "email": "billie@catalog.local",
+    "bio": "Billie Eilish Pirate Baird O'Connell is an American singer-songwriter. She first gained public attention in 2015 with her debut single Ocean Eyes.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+        "tracks": [
+          {
+            "title": "Bad Guy",
+            "track_number": 2,
+            "duration_ms": 194000,
+            "genre": "Alternative Pop",
+            "release_date": "2019-03-29",
+            "local_filename": "billie_eilish/bad_guy.mp3"
+          },
+          {
+            "title": "When the Party's Over",
+            "track_number": 7,
+            "duration_ms": 196000,
+            "genre": "Alternative Pop",
+            "release_date": "2019-03-29",
+            "local_filename": "billie_eilish/when_the_partys_over.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Dua Lipa",
+    "username": "dualipa",
+    "email": "dualipa@catalog.local",
+    "bio": "Dua Lipa is an English and Albanian singer and songwriter. Known for her signature disco-pop sound, she has received numerous accolades including three Grammy Awards.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "Future Nostalgia",
+        "tracks": [
+          {
+            "title": "Don't Start Now",
+            "track_number": 2,
+            "duration_ms": 183000,
+            "genre": "Nu-Disco",
+            "release_date": "2020-03-27",
+            "local_filename": "dua_lipa/dont_start_now.mp3"
+          },
+          {
+            "title": "Levitating",
+            "track_number": 5,
+            "duration_ms": 203000,
+            "genre": "Nu-Disco",
+            "release_date": "2020-03-27",
+            "local_filename": "dua_lipa/levitating.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Post Malone",
+    "username": "postmalone",
+    "email": "posty@catalog.local",
+    "bio": "Austin Richard Post, known professionally as Post Malone, is an American rapper, singer, songwriter, and record producer recognized for his variegated vocal styles.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "Hollywood's Bleeding",
+        "tracks": [
+          {
+            "title": "Circles",
+            "track_number": 6,
+            "duration_ms": 215000,
+            "genre": "Pop Rock",
+            "release_date": "2019-09-06",
+            "local_filename": "post_malone/circles.mp3"
+          },
+          {
+            "title": "Sunflower",
+            "track_number": 2,
+            "duration_ms": 158000,
+            "genre": "Hip Hop Pop",
+            "release_date": "2018-10-18",
+            "local_filename": "post_malone/sunflower.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Taylor Swift",
+    "username": "taylorswift",
+    "email": "taylor@catalog.local",
+    "bio": "Taylor Alison Swift is an American singer-songwriter. A subject of widespread public interest, she is a prominent cultural figure of the 21st century.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "1989",
+        "tracks": [
+          {
+            "title": "Blank Space",
+            "track_number": 2,
+            "duration_ms": 231000,
+            "genre": "Synth-Pop",
+            "release_date": "2014-10-27",
+            "local_filename": "taylor_swift/blank_space.mp3"
+          },
+          {
+            "title": "Shake It Off",
+            "track_number": 6,
+            "duration_ms": 219000,
+            "genre": "Pop",
+            "release_date": "2014-10-27",
+            "local_filename": "taylor_swift/shake_it_off.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Ed Sheeran",
+    "username": "teddysphotos",
+    "email": "edsheeran@catalog.local",
+    "bio": "Edward Christopher Sheeran is an English singer-songwriter. Born in Halifax, West Yorkshire, and raised in Framlingham, Suffolk, he began writing songs around the age of eleven.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "÷ (Divide)",
+        "tracks": [
+          {
+            "title": "Shape of You",
+            "track_number": 4,
+            "duration_ms": 233000,
+            "genre": "Pop",
+            "release_date": "2017-03-03",
+            "local_filename": "ed_sheeran/shape_of_you.mp3"
+          },
+          {
+            "title": "Perfect",
+            "track_number": 5,
+            "duration_ms": 263000,
+            "genre": "Pop Ballad",
+            "release_date": "2017-03-03",
+            "local_filename": "ed_sheeran/perfect.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Justin Bieber",
+    "username": "justinbieber",
+    "email": "bieber@catalog.local",
+    "bio": "Justin Drew Bieber is a Canadian singer. He is recognized for his genre-spanning musical influence and wide commercial success.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "Purpose",
+        "tracks": [
+          {
+            "title": "Sorry",
+            "track_number": 4,
+            "duration_ms": 200000,
+            "genre": "Dance-Pop",
+            "release_date": "2015-11-13",
+            "local_filename": "justin_bieber/sorry.mp3"
+          },
+          {
+            "title": "Love Yourself",
+            "track_number": 5,
+            "duration_ms": 233000,
+            "genre": "Acoustic Pop",
+            "release_date": "2015-11-13",
+            "local_filename": "justin_bieber/love_yourself.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Kendrick Lamar",
+    "username": "kendricklamar",
+    "email": "kendrick@catalog.local",
+    "bio": "Kendrick Lamar Duckworth is an American rapper and songwriter. Known for his progressive musical styles and socially conscious songwriting, he is considered one of the most influential hip-hop artists of his generation.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "DAMN.",
+        "tracks": [
+          {
+            "title": "HUMBLE.",
+            "track_number": 8,
+            "duration_ms": 177000,
+            "genre": "Conscious Hip Hop",
+            "release_date": "2017-04-14",
+            "local_filename": "kendrick_lamar/humble.mp3"
+          },
+          {
+            "title": "DNA.",
+            "track_number": 2,
+            "duration_ms": 185000,
+            "genre": "Conscious Hip Hop",
+            "release_date": "2017-04-14",
+            "local_filename": "kendrick_lamar/dna.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Travis Scott",
+    "username": "cactusjack",
+    "email": "travisscott@catalog.local",
+    "bio": "Jacques Bermon Webster II, better known by his stage name Travis Scott, is an American rapper, singer, songwriter, and record producer noted for his ambient, auto-tune heavy soundscapes.",
+    "profile_picture_url": "https://catalog.local",
+    "albums": [
+      {
+        "name": "ASTROWORLD",
+        "tracks": [
+          {
+            "title": "SICKO MODE",
+            "track_number": 3,
+            "duration_ms": 312000,
+            "genre": "Trap",
+            "release_date": "2018-08-03",
+            "local_filename": "travis_scott/sicko_mode.mp3"
+          },
+          {
+            "title": "BUTTERFLY EFFECT",
+            "track_number": 13,
+            "duration_ms": 212000,
+            "genre": "Trap",
+            "release_date": "2018-08-03",
+            "local_filename": "travis_scott/butterfly_effect.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Bruno Mars",
+    "username": "brunomars",
+    "email": "bruno@catalog.local",
+    "bio": "Peter Gene Hernandez, known professionally as Bruno Mars, is an American singer-songwriter, showman, and record producer known for his retro showmanship.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "24K Magic",
+        "tracks": [
+          {
+            "title": "24K Magic",
+            "track_number": 1,
+            "duration_ms": 226000,
+            "genre": "Funk R&B",
+            "release_date": "2016-11-18",
+            "local_filename": "bruno_mars/24k_magic.mp3"
+          },
+          {
+            "title": "That's What I Like",
+            "track_number": 4,
+            "duration_ms": 206000,
+            "genre": "R&B Pop",
+            "release_date": "2016-11-18",
+            "local_filename": "bruno_mars/thats_what_i_like.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Coldplay",
+    "username": "coldplay",
+    "email": "coldplay@catalog.local",
+    "bio": "Coldplay are a British rock band formed in London in 1997. They consist of vocalist and pianist Chris Martin, guitarist Jonny Buckland, bassist Guy Berryman, and drummer Will Champion.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "A Rush of Blood to the Head",
+        "tracks": [
+          {
+            "title": "The Scientist",
+            "track_number": 4,
+            "duration_ms": 309000,
+            "genre": "Alternative Rock",
+            "release_date": "2002-08-26",
+            "local_filename": "coldplay/the_scientist.mp3"
+          },
+          {
+            "title": "Clocks",
+            "track_number": 5,
+            "duration_ms": 307000,
+            "genre": "Alternative Rock",
+            "release_date": "2002-08-26",
+            "local_filename": "coldplay/clocks.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Eminem",
+    "username": "eminem",
+    "email": "slimshady@catalog.local",
+    "bio": "Marshall Bruce Mathers III, known professionally as Eminem, is an American rapper. He is credited with popularizing hip hop in middle America and is critically acclaimed as one of the greatest rappers of all time.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "The Recovery",
+        "tracks": [
+          {
+            "title": "Not Afraid",
+            "track_number": 7,
+            "duration_ms": 248000,
+            "genre": "Hip Hop",
+            "release_date": "2010-06-18",
+            "local_filename": "eminem/not_afraid.mp3"
+          },
+          {
+            "title": "Love the Way You Lie",
+            "track_number": 8,
+            "duration_ms": 263000,
+            "genre": "Hip Hop Rap",
+            "release_date": "2010-06-18",
+            "local_filename": "eminem/love_the_way_you_lie.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Ariana Grande",
+    "username": "arianagrande",
+    "email": "ariana@catalog.local",
+    "bio": "Ariana Grande-Butera is an American singer, songwriter, and actress. Her four-octave vocal range has received critical acclaim, and her personal life has been the subject of widespread media attention.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Thank U, Next",
+        "tracks": [
+          {
+            "title": "7 Rings",
+            "track_number": 10,
+            "duration_ms": 178000,
+            "genre": "Trap Pop",
+            "release_date": "2019-02-08",
+            "local_filename": "ariana_grande/7_rings.mp3"
+          },
+          {
+            "title": "Thank U, Next",
+            "track_number": 11,
+            "duration_ms": 207000,
+            "genre": "Pop R&B",
+            "release_date": "2019-02-08",
+            "local_filename": "ariana_grande/thank_u_next.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Rihanna",
+    "username": "badgalriri",
+    "email": "rihanna@catalog.local",
+    "bio": "Robyn Rihanna Fenty is a Barbadian singer, songwriter, actress, and businesswoman. She is the second-best-selling female music artist of all time.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Anti",
+        "tracks": [
+          {
+            "title": "Work",
+            "track_number": 4,
+            "duration_ms": 219000,
+            "genre": "Dancehall Pop",
+            "release_date": "2016-01-28",
+            "local_filename": "rihanna/work.mp3"
+          },
+          {
+            "title": "Needed Me",
+            "track_number": 7,
+            "duration_ms": 191000,
+            "genre": "R&B Trap",
+            "release_date": "2016-01-28",
+            "local_filename": "rihanna/needed_me.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Beyoncé",
+    "username": "beyonce",
+    "email": "beyonce@catalog.local",
+    "bio": "Beyoncé Giselle Knowles-Carter is an American singer, songwriter, and businesswoman. Known as 'Queen Bey', she is a major cultural figure of the 21st century.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Lemonade",
+        "tracks": [
+          {
+            "title": "Formation",
+            "track_number": 12,
+            "duration_ms": 206000,
+            "genre": "R&B Trap",
+            "release_date": "2016-04-23",
+            "local_filename": "beyonce/formation.mp3"
+          },
+          {
+            "title": "Hold Up",
+            "track_number": 2,
+            "duration_ms": 221000,
+            "genre": "Reggae Pop",
+            "release_date": "2016-04-23",
+            "local_filename": "beyonce/hold_up.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Juice WRLD",
+    "username": "juicewrld999",
+    "email": "juicewrld@catalog.local",
+    "bio": "Jarad Anthony Higgins, known professionally as Juice WRLD, was an American rapper, singer, and songwriter. He was a leading figure in the emo rap and SoundCloud rap genres.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Goodbye & Good Riddance",
+        "tracks": [
+          {
+            "title": "Lucid Dreams",
+            "track_number": 6,
+            "duration_ms": 239000,
+            "genre": "Emo Rap",
+            "release_date": "2018-05-23",
+            "local_filename": "juice_wrld/lucid_dreams.mp3"
+          },
+          {
+            "title": "All Girls Are the Same",
+            "track_number": 2,
+            "duration_ms": 165000,
+            "genre": "Emo Rap",
+            "release_date": "2018-05-23",
+            "local_filename": "juice_wrld/all_girls_are_the_same.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Harry Styles",
+    "username": "harrystyles",
+    "email": "harry@catalog.local",
+    "bio": "Harry Edward Styles is an English singer and actor. His musical career began in 2010 as part of the boy band One Direction.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Fine Line",
+        "tracks": [
+          {
+            "title": "Watermelon Sugar",
+            "track_number": 2,
+            "duration_ms": 174000,
+            "genre": "Indie Pop",
+            "release_date": "2019-12-13",
+            "local_filename": "harry_styles/watermelon_sugar.mp3"
+          },
+          {
+            "title": "Adore You",
+            "track_number": 3,
+            "duration_ms": 207000,
+            "genre": "Pop Rock",
+            "release_date": "2019-12-13",
+            "local_filename": "harry_styles/adore_you.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Khalid",
+    "username": "thegr8khalid",
+    "email": "khalid@catalog.local",
+    "bio": "Khalid Donnel Robinson is an American singer and songwriter. He signed to Right Hand Music Group and RCA Records and released his debut single Location in 2016.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "American Teen",
+        "tracks": [
+          {
+            "title": "Location",
+            "track_number": 2,
+            "duration_ms": 219000,
+            "genre": "R&B",
+            "release_date": "2017-03-03",
+            "local_filename": "khalid/location.mp3"
+          },
+          {
+            "title": "Young Dumb & Broke",
+            "track_number": 5,
+            "duration_ms": 202000,
+            "genre": "R&B Pop",
+            "release_date": "2017-03-03",
+            "local_filename": "khalid/young_dumb_broke.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Bill Withers",
+    "username": "billwithers_legacy",
+    "email": "withers@catalog.local",
+    "bio": "William Harrison Withers Jr. was an American singer-songwriter and musician who performed and recorded from 1970 to 1985, leaving an enduring legacy of soul masterpieces.",
+    "profile_picture_url": "catalog.local",
+    "albums": [
+      {
+        "name": "Still Bill",
+        "tracks": [
+          {
+            "title": "Lean on Me",
+            "track_number": 2,
+            "duration_ms": 257000,
+            "genre": "Soul",
+            "release_date": "2026-05-01",
+            "local_filename": "bill_withers/lean_on_me.mp3"
+          },
+          {
+            "title": "Use Me",
+            "track_number": 4,
+            "duration_ms": 226000,
+            "genre": "Soul Funk",
+            "release_date": "2026-05-01",
+            "local_filename": "bill_withers/use_me.mp3"
+          }
+        ]
+      }
+    ]
+  }
+]
