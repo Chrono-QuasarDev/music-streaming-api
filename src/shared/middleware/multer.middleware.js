@@ -1,14 +1,5 @@
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
-import crypto from "crypto";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const STAGING_DIR = path.join(__dirname, "../..", "staging");
-fs.mkdirSync(STAGING_DIR, { recursive: true });
+import { ApiError } from "../utils/ApiError.js";
 
 const AUDIO_MIME_TYPES = [
   'audio/mpeg',
@@ -20,24 +11,24 @@ const AUDIO_MIME_TYPES = [
   'audio/x-m4a'
 ];
 
-export const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, STAGING_DIR);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${crypto.randomUUID()}-${new Date().toISOString().split("T")[0]}`;
-    cb(null, `${uniqueSuffix}${path.extname(file.originalname)}`);
-  },
-});
-
-export const upload = multer({
-  storage,
+export const multerUpload = multer({
+  storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (AUDIO_MIME_TYPES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error(`Invalid file type "${file.mimetype}". Only audio files are allowed`));
+      cb(new ApiError(`Invalid file type "${file.mimetype}". Only audio files are allowed`));
     }
   },
 });
+
+export const uploadAudio = (req, res, next) => 
+  multerUpload.single('audio')(req, res, (err) => {
+    if (!err) return next();
+    if (err instanceof multer.MulterError) {
+      return next(new ApiError(err.code === 'LIMIT_FILE_SIZE' ? 413 : 400, err.message));
+    }
+    next(err);
+  }
+)

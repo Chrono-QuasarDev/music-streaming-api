@@ -42,6 +42,7 @@ const errorHandler = (err, req, res, next) => {
         message: 'Maximum file size is 50 MB'
       });
     }
+    console.error((`Multer error: ${err.code}`), err);
     return res.status(400).json({ error: err.message });
   }
 

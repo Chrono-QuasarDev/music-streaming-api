@@ -24,6 +24,7 @@ const ArtistProfile = sequelize.define("ArtistProfile", {
   },
   createdAt: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
     field: 'created_at'
   }

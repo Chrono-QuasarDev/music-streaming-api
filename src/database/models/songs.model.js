@@ -9,11 +9,12 @@ const Song = sequelize.define("Song", {
   },
   title: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: false,
   },
   artistId: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: false,
+    field: 'artist_id',
   },
   albumName: {
     type: DataTypes.STRING(255),
@@ -52,6 +53,13 @@ const Song = sequelize.define("Song", {
   }
 }, 
 {
+  indexes: [
+    {
+      unique: true,
+      fields: ['title', 'artist_id'],
+      name: 'unique_song_constraint'
+    }
+  ],
   tableName: 'songs',
   freezeTableName: true,
   timestamps: false
