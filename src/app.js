@@ -16,6 +16,13 @@ app.use(cors());
 app.use('/health', healthRouter);
 app.use('/api/v1', v1Routes);
 
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: "Route not found"
+  });
+});
+
 app.use(errorHandler);
 
 export default app;

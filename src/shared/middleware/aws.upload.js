@@ -1,4 +1,4 @@
-import { DeleteBucket$, DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import crypto from "crypto";
 import path from "path";
@@ -34,6 +34,6 @@ export const uploadFileToB2 = async (file, id) => {
   return key;
 }
 
-export const deleteFileFromB2 = async (key) => {
-  s3.send(new DeleteObjectCommand({ Bucket: process.env.B2_BUCKET_NAME, key: key }));
+export const deleteFileFromB2 = (key) => {
+  return s3.send(new DeleteObjectCommand({ Bucket: process.env.B2_BUCKET_NAME, Key: key }));
 }

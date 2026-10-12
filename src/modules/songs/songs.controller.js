@@ -14,80 +14,68 @@ import { songSchema } from "./songs.validator.js";
 const ALLOWED_SORT_FIELDS = ['title', 'albumName', 'genre', 'releaseDate'];
 const ALLOWED_ORDER = ['asc', 'desc'];
 
-export const songs = async (req, res, next) => {
-  try {
-    const page = Number(req.query.page) || 1;
-    const size = Number(req.query.size) || 20;
-    const sortBy = ALLOWED_SORT_FIELDS.includes(req.query.sortBy) ? req.query.sortBy : 'releaseDate';
-    const orderBy = ALLOWED_ORDER.includes(req.query.orderBy) ? req.query.orderBy : 'desc';
+export const songs = async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const size = Number(req.query.size) || 20;
+  const sortBy = ALLOWED_SORT_FIELDS.includes(req.query.sortBy) ? req.query.sortBy : 'releaseDate';
+  const orderBy = ALLOWED_ORDER.includes(req.query.orderBy) ? req.query.orderBy : 'desc';
 
-    // Calculate limit and offset
-    let limit = size;
-    if (limit > 100) limit = 100;
-    const offset = (page - 1) * limit;
+  // Calculate limit and offset
+  let limit = size;
+  if (limit > 100) limit = 100;
+  const offset = (page - 1) * limit;
 
-    const { rows, count } = await getSongs({ limit, offset, sortBy, orderBy });
+  const { rows, count } = await getSongs({ limit, offset, sortBy, orderBy });
 
-    res.status(200).json({
-      success: true,
-      message: 'Songs fetched successfully',
-      data: rows,
-      meta: {
-        page,
-        limit,
-        totalItems: count,
-        totalPages: Math.ceil(count / limit)
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.status(200).json({
+    success: true,
+    message: 'Songs fetched successfully',
+    data: rows,
+    meta: {
+      page,
+      limit,
+      totalItems: count,
+      totalPages: Math.ceil(count / limit)
+    }
+  });
 }
 
-export const search = async (req, res, next) => {
-  try {
-    const { q, title, album, genre } = req.query;
-    const page = Number(req.query.page) || 1;
-    const size = Number(req.query.size) || 20;
-    const sortBy = ALLOWED_SORT_FIELDS.includes(req.query.sortBy) ? req.query.sortBy : 'releaseDate';
-    const orderBy = ALLOWED_ORDER.includes(req.query.orderBy) ? req.query.orderBy : 'desc';
+export const search = async (req, res) => {
+  const { q, title, album, genre } = req.query;
+  const page = Number(req.query.page) || 1;
+  const size = Number(req.query.size) || 20;
+  const sortBy = ALLOWED_SORT_FIELDS.includes(req.query.sortBy) ? req.query.sortBy : 'releaseDate';
+  const orderBy = ALLOWED_ORDER.includes(req.query.orderBy) ? req.query.orderBy : 'desc';
 
-    // Calculate limit and offset
-    let limit = size;
-    if (limit > 100) limit = 100;
-    const offset = (page - 1) * limit;
+  // Calculate limit and offset
+  let limit = size;
+  if (limit > 100) limit = 100;
+  const offset = (page - 1) * limit;
 
-    const { rows, count } = await searchSongs({ limit, offset, q, title, album, genre, sortBy, orderBy });
+  const { rows, count } = await searchSongs({ limit, offset, q, title, album, genre, sortBy, orderBy });
 
-    res.status(200).json({
-      success: true,
-      message: 'Songs searched successfully',
-      data: rows,
-      meta: {
-        page,
-        limit,
-        totalItems: count,
-        totalPages: Math.ceil(count / limit)
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.status(200).json({
+    success: true,
+    message: 'Songs searched successfully',
+    data: rows,
+    meta: {
+      page,
+      limit,
+      totalItems: count,
+      totalPages: Math.ceil(count / limit)
+    }
+  });
 }
 
-export const songInfo = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const song = await getSongInfo(id);
+export const songInfo = async (req, res) => {
+  const { id } = req.params;
+  const song = await getSongInfo(id);
 
-    res.status(200).json({
-      success: true,
-      message: 'Song fetched successfully',
-      data: song
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.status(200).json({
+    success: true,
+    message: 'Song fetched successfully',
+    data: song
+  });
 }
 
 export const stream = async (req, res, next) => {
@@ -119,50 +107,42 @@ export const stream = async (req, res, next) => {
   }
 }
 
-export const share = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const song = await shareSong(id);
+export const share = async (req, res) => {
+  const { id } = req.params;
+  const song = await shareSong(id);
 
-    res.status(200).json({
-      success: true,
-      message: 'Song shared successfully',
-      data: song
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.status(200).json({
+    success: true,
+    message: 'Song shared successfully',
+    data: song
+  });
 }
 
-export const addSong = async (req, res, next) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        error: 'No audio file provided'
-      });
-    }
-
-    const { title, albumName, genre, trackNumber, releaseDate } = req.body;
-    const { id } = req.user;
-    const file = req.file;
-
-    const songData = songSchema.parse({
-      title,
-      albumName,
-      genre,
-      trackNumber,
-      releaseDate
+export const addSong = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      error: 'No audio file provided'
     });
-
-    const song = await createSong(id, songData, file);
-
-    res.status(201).json({
-      success: true,
-      message: 'Song added successfully',
-      data: song,
-    });
-  } catch (error) {
-    next(error);
   }
+
+  const { title, albumName, genre, trackNumber, releaseDate } = req.body;
+  const { id } = req.user;
+  const file = req.file;
+
+  const songData = songSchema.parse({
+    title,
+    albumName,
+    genre,
+    trackNumber,
+    releaseDate
+  });
+
+  const song = await createSong(id, songData, file);
+
+  res.status(201).json({
+    success: true,
+    message: 'Song added successfully',
+    data: song,
+  });
 }

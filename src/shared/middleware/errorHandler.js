@@ -1,5 +1,8 @@
 import multer from "multer";
 import { ApiError } from "../utils/ApiError.js";
+import jwt from "jsonwebtoken";
+import { ZodError } from "zod";
+import { ValidationError as SequelizeValidationError } from "sequelize";
 
 const errorHandler = (err, req, res, next) => {
   let error = err;
@@ -19,18 +22,33 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  if (error.name === 'ValidationError') {
+  if (error instanceof ZodError) {
+    return res.status(400).json({
+      success: false,
+      error: error.issues.map(issue => issue.message).join(', '),
+      issues: error.issues
+    });
+  }
+
+  if (error instanceof SequelizeValidationError || error.name === 'ValidationError') {
     return res.status(400).json({
       success: false,
       error: error.message
     });
   }
 
-  if (error.name === 'TokenExpiredError') {
+  if (error instanceof jwt.TokenExpiredError) {
     return res.status(401).json({
       success: false,
       error: "Token expired",
       message: "Please log in again"
+    });
+  }
+
+  if (error instanceof jwt.JsonWebTokenError) {
+    return res.status(401).json({
+      success: false,
+      error: "Invalid token"
     });
   }
 

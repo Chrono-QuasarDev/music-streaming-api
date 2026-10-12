@@ -10,10 +10,7 @@
     "test": "node --test",
     "db:migrate": "sequelize-cli db:migrate",
     "db:migrate:undo": "sequelize-cli db:migrate:undo",
-    "seed:playlist-songs": "sequelize-cli db:seed --seed seedPlaylistSongs.js",
-    "seed:artists": "node src/database/seeders/seedArtists.js",
-    "seed:songs": "node src/database/seeders/seedSongs.js",
-    "seed": "npm run seed:artists && npm run seed:songs",
+    "seed:catalog": "node scripts/seed-catalog.js",
     "start": "node --watch server.js"
   },
   "dependencies": {
@@ -31,6 +28,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.8",
     "sequelize-cli": "^6.6.5",
+    "uuid": "^14.0.2",
     "zod": "^4.5.4"
   },
   "allowScripts": {

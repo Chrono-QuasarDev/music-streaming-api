@@ -13,12 +13,12 @@ export const getSongs = async (query) => {
     limit,
     offset,
     order: [[sortBy, orderBy]],
-    attributes: ['id', 'title', 'artistId', 'albumName', 'genre'],
     include: [{
       model: ArtistProfile,
       attributes: ['id', 'bio', 'profilePictureUrl'],
       include: [{ model: User, attributes: ['id', 'username'] }]
-    }]
+    }],
+    attributes: { exclude: ['filePath'] },
   });
   return songs;
 }
@@ -47,7 +47,8 @@ export const searchSongs = async (query) => {
       model: ArtistProfile,
       attributes: ['id', 'bio', 'profilePictureUrl'],
       include: [{ model: User, attributes: ['id', 'username'] }]
-    }]
+    }],
+    attributes: { exclude: ['filePath'] },
   });
   return songs;
 }
@@ -59,7 +60,8 @@ export const getSongInfo = async (id) => {
         model: ArtistProfile,
         include: [{ model: User, attributes: ['username'] }]
       }
-    ]
+    ],
+    attributes: { exclude: ['filePath'] },
   });
   if (!song) {
     throw new ApiError(404, 'Song not found');

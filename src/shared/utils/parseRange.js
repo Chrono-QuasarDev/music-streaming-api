@@ -5,7 +5,7 @@ export const parseRange = (rangeHeader, fileSize) => {
   }
 
   // Only "bytes" unit is defined by spec
-  if (typeof rangeHeader !== 'string' && !rangeHeader.startsWith('bytes=')) {
+  if (typeof rangeHeader !== 'string' || !rangeHeader.startsWith('bytes=')) {
     return { type: 'full' }
   }
 

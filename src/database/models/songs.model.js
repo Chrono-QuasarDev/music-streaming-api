@@ -41,7 +41,7 @@ const Song = sequelize.define("Song", {
     allowNull: false
   },
   releaseDate: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false,
     field: 'release_date'
   },

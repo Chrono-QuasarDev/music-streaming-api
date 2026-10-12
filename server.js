@@ -1,10 +1,21 @@
 import "dotenv/config";
+import jwt from "jsonwebtoken";
 import sequelize from "./src/config/sequelize.js";
 import "./src/database/models/associations.js";
 import app from "./src/app.js";
 
-if (!process.env.DATABASE_URL || !process.env.PORT) {
-  console.error("One or more required environment variables are not set");
+const requiredEnv = ["DATABASE_URL", "PORT", "JWT_SECRET", "JWT_EXPIRES"];
+const missingEnv = requiredEnv.filter((name) => !process.env[name]);
+
+if (missingEnv.length > 0) {
+  console.error(`Missing required environment variables: ${missingEnv.join(", ")}`);
+  process.exit(1);
+}
+
+try {
+  jwt.sign({}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
+} catch (error) {
+  console.error("Invalid JWT configuration:", error.message);
   process.exit(1);
 }
 

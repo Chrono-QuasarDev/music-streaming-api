@@ -29,19 +29,12 @@ export const followArtist = async (artistId, userId) => {
 
   if (isArtist.userId === userId) throw new ApiError(400, "You cannot follow yourself");
 
-  let follows;
-  let created;
-
-  try {
-    [follows, created] = await Follows.findOrCreate({
-      where: {
-        artistId,
-        followerId: userId
-      }
-    });
-  } catch (error) {
-    throw new ApiError(500, "Error following artist");
-  }
+  const [follows, created] = await Follows.findOrCreate({
+    where: {
+      artistId,
+      followerId: userId
+    }
+  });
 
   if (!created) throw new ApiError(400, "You are already following this artist");
 

@@ -8,11 +8,10 @@ Create the PostgreSQL database and copy `.env` from the project configuration. T
 
 ```bash
 npm run db:migrate
-npm run seed:artists
-npm run seed:songs
+npm run seed:catalog
 ```
 
-Create a playlist through the API before running `npm run seed:playlist-songs`. The playlist seeder targets the `Mood Lifter` playlist and is safe to run more than once.
+The catalog seeder creates the artist and song records and uploads available audio files to Backblaze B2. Configure `DATABASE_URL`, `B2_ENDPOINT`, `B2_KEY_ID`, `B2_APP_KEY`, and `B2_BUCKET_NAME` in `.env` before running it. `SEED_ARTIST_PASSWORD` is optional and defaults to `artistpass`.
 
 ## Playlist song behavior
 

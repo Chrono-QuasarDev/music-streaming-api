@@ -18,7 +18,7 @@ export const multerUpload = multer({
     if (AUDIO_MIME_TYPES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new ApiError(`Invalid file type "${file.mimetype}". Only audio files are allowed`));
+      cb(new ApiError(415, `Invalid file type "${file.mimetype}". Only audio files are allowed`));
     }
   },
 });

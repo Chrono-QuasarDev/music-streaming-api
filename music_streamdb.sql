@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS playlists_songs (
 
 CREATE TABLE IF NOT EXISTS follows (
   id uuid PRIMARY KEY NOT NULL,
-  artist_id uuid NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  artist_id uuid NOT NULL REFERENCES artist_profiles (id) ON UPDATE CASCADE ON DELETE CASCADE,
   follower_id uuid NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
   followed_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
